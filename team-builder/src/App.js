@@ -6,21 +6,29 @@ import ReactDOM from "react-dom"
 
 function App() {
 
-  const [teamMembers, setTeamMembers]=useState([])
+  const [teamMembers, setTeamMembers]=useState(
+    {name: "Ahmed"},
+    {name: "Jesse"},
+    {name: "Brody"},
+  )
   const [teamMate, setTeamMate]=useState("")
+
+const displayTeam=teamMembers.map(function(item){
+    return <p>{item.name}</p>;
+  })
 
 
   return (
-    <div>
-      <h1>{teamMembers}</h1>
+    <div className="App">
+      <h1>Team Members</h1>
+      <p>{displayTeam}</p>
       <AddMember />
     </div>
     );
 }
 
 
-function AddMember() {
-
+function AddMember(props) {
 
 
   return (

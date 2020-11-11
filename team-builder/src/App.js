@@ -3,42 +3,53 @@ import React, { useState } from "react"
 import ReactDOM from "react-dom"
 
 
-
+//parent component function creating the team members list and calling form creating component function
 function App() {
 
-  const [teamMembers, setTeamMembers]=useState(
+  const [teamMembers, setTeamMembers]=useState([
     {name: "Ahmed"},
     {name: "Jesse"},
     {name: "Brody"},
-  )
-  const [teamMate, setTeamMate]=useState("")
+  ]);
 
 const displayTeam=teamMembers.map(function(item){
-    return <p>{item.name}</p>;
+    return <p key={item.name}>{item.name}</p>;
   })
+
 
 
   return (
     <div className="App">
       <h1>Team Members</h1>
-      <p>{displayTeam}</p>
+      <div>{displayTeam}</div>
       <AddMember />
     </div>
     );
 }
 
 
-function AddMember(props) {
+
+//form creating component function 
+export function AddMember(props) {
+
+let [teamMate, setTeamMate]=useState({name: ""});
+
+const handleChanges=function(event){
+  setTeamMate({name: event.target.value});
+  console.log(teamMate);
+}
+
 
 
   return (
     <div>
     <form>
-    <label htmlFor="name">
+    <label htmlFor="name"> Name
       <input 
       type="text"
       id="name"
-      placeholder="name"
+      placeholder="Enter Name"
+      onChange={handleChanges}
       />
     </label>
   </form>

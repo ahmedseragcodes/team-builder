@@ -12,6 +12,9 @@ function App() {
     {name: "Brody"},
   ]);
 
+  //test
+  let [teamMate, setTeamMate]=useState({name: ""});
+
 const displayTeam=teamMembers.map(function(item){
     return <p key={item.name}>{item.name}</p>;
   })
@@ -22,7 +25,7 @@ const displayTeam=teamMembers.map(function(item){
     <div className="App">
       <h1>Team Members</h1>
       <div>{displayTeam}</div>
-      <AddMember />
+      <AddMember teamMate={teamMate} setTeamMate={setTeamMate} displayTeam={displayTeam}/>
     </div>
     );
 }
@@ -32,19 +35,24 @@ const displayTeam=teamMembers.map(function(item){
 //form creating component function 
 export function AddMember(props) {
 
-let [teamMate, setTeamMate]=useState({name: ""});
+const displayTeam=props;
+const teamMate=props;
+const setTeamMate=props;
+
 
 const handleChanges=function(event){
   setTeamMate({name: event.target.value});
-  console.log(teamMate);
 }
 
-
+const submitForm=function(event){
+  event.preventDefault();
+  displayTeam.push(teamMate);
+}
 
   return (
     <div>
-    <form>
-    <label htmlFor="name"> Name
+    <form onSubmit={submitForm}>
+    <label htmlFor="name">
       <input 
       type="text"
       id="name"
@@ -52,6 +60,7 @@ const handleChanges=function(event){
       onChange={handleChanges}
       />
     </label>
+    <button type="submit">Add Team Member</button>
   </form>
   </div>
   )

@@ -1,2 +1,5 @@
 /* General styling located within index css */
 
+input, select {
+    margin: 1rem;
+}

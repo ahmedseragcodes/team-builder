@@ -10,9 +10,17 @@ const initialFormValues={
   role: ""
 }
 
+const initialTeam=[{
+  username: "AS",
+  email: "AS@LambdaSchool.com",
+  role: "FS",
+},]
+
 function App() {
 
 const [formValues, setFormValues]=useState(initialFormValues);
+
+const [team, setTeam]=useState(initialTeam);
 
 const onChange=function(event){
   const { name, value }=event.target;
@@ -20,12 +28,25 @@ const onChange=function(event){
   setFormValues({ ...formValues, [name]: value })
 }
 
+const onSubmit=function(event){
+  event.preventDefault();
+
+  const newTeamMember={
+    username: formValues.username,
+    email: formValues.email,
+    role: formValues.role
+  }
+
+  setTeam([...team, newTeamMember]);
+  setFormValues(initialFormValues);
+}
+
 
   return (
     <DevTeam>
       <h1>Our Dev Team</h1>
         <Link to="/">Home</Link>
-      <form>
+      <form onSubmit={onSubmit}>
         <label htmlFor="username">Username:
           <input name="username" type="text" value={formValues.username} onChange={onChange} />
         </label>
@@ -33,12 +54,19 @@ const onChange=function(event){
           <input name="email" type="email" value={formValues.email} onChange={onChange} />
         </label>
         <label htmlFor="role">Role:
-          <select name="role" type="dropdown" value={formValues.role}>
+          <select name="role" type="dropdown" value={formValues.role} onChange={onChange}>
+            <option value="">Choose A Role</option>
             <option value="FE">Front End Engineer</option>
             <option value="BE">Back End Engineer</option>
+            <option value="FS">Full Stack Engineer</option>
           </select>
         </label>
+        <button>Submit</button>
       </form>
+      {team.map(function(member){
+        return <p>Username: {member.username}, Email: {member.email}, Role: {member.role}</p>
+
+      })}
     </DevTeam>
   );
 }
